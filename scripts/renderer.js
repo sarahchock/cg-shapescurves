@@ -45,39 +45,114 @@ class Renderer {
     }
 
     // ctx:          canvas context
-    drawSlide0(ctx) {
-        
+    drawSlide0(ctx) 
+    {
+        let pt0 = new Object();
+        pt0.x = Math.floor(Math.random()*this.canvas.width);
+        pt0.y = Math.floor(Math.random()*(this.canvas.height-49)) + 49;
+        let pt1 = new Object();
+        pt1.x = Math.floor(Math.random()*(this.canvas.width-pt0.x)) + pt0.x;
+        pt1.y = Math.floor(Math.random()*(this.canvas.height-pt0.y)) + pt0.y;
+        let red = Math.floor(Math.random()*256);
+        let green = Math.floor(Math.random()*256);
+        let blue = Math.floor(Math.random()*256);
+        let col = [red,green,blue,255];
+        this.drawRectangle(pt0, pt1, col, ctx);
+        if(this.show_points)
+        {
+            this.drawPoints(pts,col,ctx);
+        }
     }
 
     // ctx:          canvas context
-    drawSlide1(ctx) {
+    drawSlide1(ctx) 
+    {
+        let center = new Object();
+        center.x = 300;
+        center.y = 300;
+        let radius = 100;
+        let col = [255,0,0,255];
+        this.drawCircle(center, radius, col, ctx);
+    }
+
+    // ctx:          canvas context
+    drawSlide2(ctx) 
+    {
 
     }
 
     // ctx:          canvas context
-    drawSlide2(ctx) {
+    drawSlide3(ctx) 
+    {
 
     }
 
-    // ctx:          canvas context
-    drawSlide3(ctx) {
-
+    drawPoints(pts, col, ctx)
+    {
+        for(let i = 0; i < pts.length; i++)
+            {
+                let lower = new Object();
+                let upper = new Object();
+                col = [255,0,0,255];
+                lower.x = pts[i].x - 3;
+                lower.y = pts[i].y - 3;
+                upper.x = pts[i].x + 3;
+                upper.y = pts[i].y + 3;
+                this.drawRectangle(lower, upper, col, ctx);
+            }
     }
-
     // left_bottom:  object ({x: __, y: __})
     // right_top:    object ({x: __, y: __})
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
-    drawRectangle(left_bottom, right_top, color, ctx) {
-        
+    drawRectangle(left_bottom, right_top, color, ctx) 
+    {
+        let right_bottom = new Object();
+        right_bottom.x = right_top.x;
+        right_bottom.y = left_bottom.y;
+        let left_top = new Object();
+        left_top.x = left_bottom.x;
+        left_top.y = right_top.y;
+        this.drawLine(left_bottom,right_bottom,color,ctx);
+        this.drawLine(right_bottom,right_top,color,ctx);
+        this.drawLine(right_top,left_top,color,ctx);
+        this.drawLine(left_top,left_bottom,color,ctx);
+        let pts = [left_bottom, right_top];
+        if(this.show_points)
+        {
+            this.drawPoints(pts,color,ctx);
+        }
     }
 
     // center:       object ({x: __, y: __})
     // radius:       int
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
-    drawCircle(center, radius, color, ctx) {
-        
+    drawCircle(center, radius, color, ctx) 
+    {
+        let deg = 0;
+        let degInc = 2*Math.PI/this.num_curve_sections;
+        let pt0 = new Object();
+        pt0.x = center.x + Math.round(radius*Math.cos(deg));
+        pt0.y = center.y + Math.round(radius*Math.sin(deg));
+        let pt1 = new Object();
+        let pts = [];
+        pts.length = this.num_curve_sections;
+        for(let i = 0; i < this.num_curve_sections; i++)
+        {
+            pts[i] = pt0;
+            deg = deg + degInc;
+            pt1.x = center.x + Math.round(radius*Math.cos(deg));
+            pt1.y = center.y + Math.round(radius*Math.sin(deg));
+            this.drawLine(pt0,pt1,color,ctx);
+            pt0.x = pt1.x;
+            pt0.y = pt1.y;
+        }
+        if(this.show_points)
+        {
+            let col = [255,0,0,255];
+            this.drawPoints(pts,col,ctx);
+        }
     }
 
     // pt0:          object ({x: __, y: __})
@@ -86,7 +161,8 @@ class Renderer {
     // pt3:          object ({x: __, y: __})
     // color:        array of int [R, G, B, A]
     // ctx:          canvas context
-    drawBezierCurve(pt0, pt1, pt2, pt3, color, ctx) {
+    drawBezierCurve(pt0, pt1, pt2, pt3, color, ctx) 
+    {
         
     }
 
