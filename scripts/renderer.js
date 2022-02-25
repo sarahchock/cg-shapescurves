@@ -9,6 +9,7 @@ class Renderer {
         this.slide_idx = 0;
         this.num_curve_sections = num_curve_sections;
         this.show_points = show_points_flag;
+        this.pts = [];
     }
 
     // n:  int
@@ -24,7 +25,8 @@ class Renderer {
     }
     
     // slide_idx:  int
-    drawSlide(slide_idx) {
+    drawSlide(slide_idx) 
+    {
         this.slide_idx = slide_idx;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -58,10 +60,6 @@ class Renderer {
         let blue = Math.floor(Math.random()*256);
         let col = [red,green,blue,255];
         this.drawRectangle(pt0, pt1, col, ctx);
-        if(this.show_points)
-        {
-            this.drawPoints(pts,col,ctx);
-        }
     }
 
     // ctx:          canvas context
@@ -73,6 +71,11 @@ class Renderer {
         let radius = 100;
         let col = [255,0,0,255];
         this.drawCircle(center, radius, col, ctx);
+        if(this.show_points)
+        {
+            let col = [255,0,0,255];
+            this.drawPoints(this.pts, col, ctx);
+        }
     }
 
     // ctx:          canvas context
@@ -87,18 +90,18 @@ class Renderer {
 
     }
 
-    drawPoints(pts, col, ctx)
+    drawPoints(col, ctx)
     {
-        for(let i = 0; i < pts.length; i++)
+        for(let i = 0; i < this.num_curve_sections; i++)
             {
-                let lower = new Object();
+                /* let lower = new Object();
                 let upper = new Object();
                 col = [255,0,0,255];
                 lower.x = pts[i].x - 3;
                 lower.y = pts[i].y - 3;
                 upper.x = pts[i].x + 3;
-                upper.y = pts[i].y + 3;
-                this.drawRectangle(lower, upper, col, ctx);
+                upper.y = pts[i].y + 3; */
+                this.drawCircle(this.pts[i], 3, col, ctx);
             }
     }
     // left_bottom:  object ({x: __, y: __})
@@ -120,7 +123,7 @@ class Renderer {
         let pts = [left_bottom, right_top];
         if(this.show_points)
         {
-            this.drawPoints(pts,color,ctx);
+            pts.forEach(drawPoints(pts,color,ctx));
         }
     }
 
@@ -136,22 +139,15 @@ class Renderer {
         pt0.x = center.x + Math.round(radius*Math.cos(deg));
         pt0.y = center.y + Math.round(radius*Math.sin(deg));
         let pt1 = new Object();
-        let pts = [];
-        pts.length = this.num_curve_sections;
         for(let i = 0; i < this.num_curve_sections; i++)
         {
-            pts[i] = pt0;
+            this.pts[i] = pt0;
             deg = deg + degInc;
             pt1.x = center.x + Math.round(radius*Math.cos(deg));
             pt1.y = center.y + Math.round(radius*Math.sin(deg));
             this.drawLine(pt0,pt1,color,ctx);
             pt0.x = pt1.x;
             pt0.y = pt1.y;
-        }
-        if(this.show_points)
-        {
-            let col = [255,0,0,255];
-            this.drawPoints(pts,col,ctx);
         }
     }
 
