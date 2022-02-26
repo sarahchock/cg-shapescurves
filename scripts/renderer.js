@@ -93,13 +93,6 @@ class Renderer {
     {
         for(let i = 0; i < pts.length; i++)
             {
-                /* let lower = new Object();
-                let upper = new Object();
-                col = [255,0,0,255];
-                lower.x = pts[i].x - 3;
-                lower.y = pts[i].y - 3;
-                upper.x = pts[i].x + 3;
-                upper.y = pts[i].y + 3; */
                 this.drawCircle(pts[i], 3, col, ctx);
             }
     }
@@ -142,7 +135,7 @@ class Renderer {
         //pts.length = this.num_curve_sections;
         for(let i = 0; i < this.num_curve_sections; i++)
         {
-            pts.push(pt0);
+            pts[i] = pt0;
             deg = deg + degInc;
             pt1.x = center.x + Math.round(radius*Math.cos(deg));
             pt1.y = center.y + Math.round(radius*Math.sin(deg));
