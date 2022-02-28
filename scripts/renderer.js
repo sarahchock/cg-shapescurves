@@ -70,11 +70,6 @@ class Renderer {
         let radius = 100;
         let col = [255,0,0,255];
         this.drawCircle(center, radius, col, ctx);
-        /* if(this.show_points)
-        {
-            let col = [255,0,0,255];
-            this.drawPoints(this.pts, col, ctx);
-        } */
     }
 
     // ctx:          canvas context
@@ -95,6 +90,7 @@ class Renderer {
             {
                 this.drawCircle(pts[i], 3, col, ctx);
             }
+            this.show_points = true;
     }
     // left_bottom:  object ({x: __, y: __})
     // right_top:    object ({x: __, y: __})
@@ -112,11 +108,13 @@ class Renderer {
         this.drawLine(right_bottom,right_top,color,ctx);
         this.drawLine(right_top,left_top,color,ctx);
         this.drawLine(left_top,left_bottom,color,ctx);
-        //this.pts = [left_bottom, right_top];
-        /* if(this.show_points)
+        let pts = [left_bottom, left_top, right_bottom, right_top];
+        if(this.show_points)
         {
-            this.drawPoints(this.pts,color,ctx);
-        } */
+            this.show_points = false;
+            color = [255,0,0,255];
+            this.drawPoints(pts,color,ctx);
+        }
     }
 
     // center:       object ({x: __, y: __})
@@ -131,11 +129,13 @@ class Renderer {
         pt0.x = center.x + Math.round(radius*Math.cos(deg));
         pt0.y = center.y + Math.round(radius*Math.sin(deg));
         let pt1 = new Object();
-        var pts = new Array(this.num_curve_sections);
-        //pts.length = this.num_curve_sections;
+        let pts = new Array(this.num_curve_sections);
         for(let i = 0; i < this.num_curve_sections; i++)
         {
-            pts[i] = pt0;
+            let arraypt = new Object();
+            arraypt.x = pt0.x;
+            arraypt.y = pt0.y;
+            pts[i] = arraypt;
             deg = deg + degInc;
             pt1.x = center.x + Math.round(radius*Math.cos(deg));
             pt1.y = center.y + Math.round(radius*Math.sin(deg));
