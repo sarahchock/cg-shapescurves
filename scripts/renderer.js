@@ -75,13 +75,26 @@ class Renderer {
     // ctx:          canvas context
     drawSlide2(ctx) 
     {
-
+        let pt0 = new Object();
+        let pt1 = new Object();
+        let pt2 = new Object();
+        let pt3 = new Object();
+        pt0.x = 100;
+        pt0.y = 100;
+        pt1.x = 200;
+        pt1.y = 550;
+        pt2.x = 600;
+        pt2.y = 500;
+        pt3.x = 600;
+        pt3.y = 200;
+        let col = [255,0,0,255];
+        this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
     }
 
     // ctx:          canvas context
     drawSlide3(ctx) 
     {
-
+        
     }
 
     drawPoints(pts, col, ctx)
@@ -159,7 +172,38 @@ class Renderer {
     // ctx:          canvas context
     drawBezierCurve(pt0, pt1, pt2, pt3, color, ctx) 
     {
-        
+        let time = 0.0;
+        let timeInc = 1.0/this.num_curve_sections;
+        let start = new Object();
+        let end = new Object();
+        start.x = pt0.x;
+        start.y = pt0.y;
+        end.x = 0;
+        end.y = 0;
+        let pts = new Array(this.num_curve_sections + 1);
+        for(let i = 0; i < this.num_curve_sections; i++)
+        {
+            let arraypt = new Object();
+            arraypt.x = start.x;
+            arraypt.y = start.y;
+            pts[i] = arraypt;
+            time = time + timeInc;
+            end.x = Math.round((Math.pow((1-time),3)*pt0.x) + (3*Math.pow((1-time),2)*time*pt1.x) + (3*(1-time)*Math.pow(time,2)*pt2.x) + (Math.pow(time,3)*pt3.x));
+            end.y = Math.round((Math.pow((1-time),3)*pt0.y) + (3*Math.pow((1-time),2)*time*pt1.y) + (3*(1-time)*Math.pow(time,2)*pt2.y) + (Math.pow(time,3)*pt3.y));
+            this.drawLine(start,end,color,ctx);
+            start.x = end.x;
+            start.y = end.y;
+        }
+        pts[this.num_curve_sections] = end;
+        if(this.show_points)
+        {
+            this.show_points = false;
+            this.drawPoints(pts,color,ctx);
+            this.show_points = false;
+            color = [0,0,255,255];
+            let controlpts = [pt1,pt2];
+            this.drawPoints(controlpts,color,ctx);
+        }
     }
 
     // pt0:          object ({x: __, y: __})
