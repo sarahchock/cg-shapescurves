@@ -94,7 +94,45 @@ class Renderer {
     // ctx:          canvas context
     drawSlide3(ctx) 
     {
-        
+        let col = [255,0,0,255];
+        let pt0 = {x: 100, y: 375};
+        let pt1 = {x: 0, y: 400};
+        let pt2 = {x: 0, y: 300};
+        let pt3 = {x: 50, y: 300};
+        this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
+        pt0 = {x: 50, y: 300};
+        pt1 = {x: 175, y: 325};
+        pt2 = {x: 175, y: 175};
+        pt3 = {x: 25, y: 225};
+        this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
+        pt0 = {x: 210, y: 265};
+        let rad = 40;
+        this.drawCircle(pt0, rad, col, ctx);
+        pt0 = {x: 250, y: 225};
+        pt1 = {x: 252, y: 305};
+        this.drawRectangle(pt0,pt1,col,ctx);
+        pt0 = {x: 272, y: 225};
+        pt1 = {x: 274, y: 305};
+        this.drawRectangle(pt0,pt1,col,ctx);
+        pt0 = {x: 275, y: 225};
+        pt1 = {x: 275, y: 350};
+        pt2 = {x: 340, y: 325};
+        pt3 = {x: 340, y: 275};
+        this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
+        pt0 = {x: 400, y: 265};
+        rad = 40;
+        this.drawCircle(pt0, rad, col, ctx);
+        pt0 = {x: 440, y: 225};
+        pt1 = {x: 442, y: 305};
+        this.drawRectangle(pt0,pt1,col,ctx);
+        pt0 = {x: 465, y: 225};
+        pt1 = {x: 467, y: 400};
+        this.drawRectangle(pt0,pt1,col,ctx);
+        pt0 = {x: 468, y: 225};
+        pt1 = {x: 468, y: 325};
+        pt2 = {x: 533, y: 325};
+        pt3 = {x: 533, y: 225};
+        this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
     }
 
     drawPoints(pts, col, ctx)
