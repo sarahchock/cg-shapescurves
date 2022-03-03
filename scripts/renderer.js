@@ -48,33 +48,64 @@ class Renderer {
     // ctx:          canvas context
     drawSlide0(ctx) 
     {
+        //fun rectangle!
         let pt0 = new Object();
         pt0.x = Math.floor(Math.random()*this.canvas.width);
         pt0.y = Math.floor(Math.random()*(this.canvas.height-49)) + 49;
         let pt1 = new Object();
-        pt1.x = Math.floor(Math.random()*(this.canvas.width-pt0.x)) + pt0.x;
-        pt1.y = Math.floor(Math.random()*(this.canvas.height-pt0.y)) + pt0.y;
+        pt1.x = Math.floor(Math.random()*(this.canvas.width-pt0.x - 10)) + pt0.x + 10;
+        pt1.y = Math.floor(Math.random()*(this.canvas.height-pt0.y - 10)) + pt0.y + 10;
         let red = Math.floor(Math.random()*256);
         let green = Math.floor(Math.random()*256);
         let blue = Math.floor(Math.random()*256);
         let col = [red,green,blue,255];
         this.drawRectangle(pt0, pt1, col, ctx);
+        //boring rectangle
+        pt0.x = 200;
+        pt0.y = 200;
+        pt1.x = 600;
+        pt1.y = 400;
+        col = [255,20,147,255];
+        this.drawRectangle(pt0,pt1,col,ctx);
     }
 
     // ctx:          canvas context
     drawSlide1(ctx) 
     {
+        //boring circle
         let center = new Object();
-        center.x = 300;
+        center.x = 400;
         center.y = 300;
         let radius = 100;
-        let col = [255,0,0,255];
+        let col = [255,20,147,255];
+        this.drawCircle(center, radius, col, ctx);
+        //fun circle!
+        center.x = Math.floor(Math.random()*this.canvas.width);
+        center.y = Math.floor(Math.random()*(this.canvas.height-50)) + 50;
+        let xmin = 800 - center.x;
+        let ymin = 600 - center.y;
+        let ymin2 = center.y - 50;
+        let mins = [center.x, ymin2, xmin, ymin];
+        let min = 800;
+        for(let i = 0; i < 4; i++)
+        {
+            if(mins[i] < min)
+            {
+                min = mins[i];
+            }
+        }
+        radius = Math.floor(Math.random()*(min-.2*min)) + .2*min;
+        let red = Math.floor(Math.random()*256);
+        let green = Math.floor(Math.random()*256);
+        let blue = Math.floor(Math.random()*256);
+        col = [red,green,blue,255];
         this.drawCircle(center, radius, col, ctx);
     }
 
     // ctx:          canvas context
     drawSlide2(ctx) 
     {
+        //boring bezier
         let pt0 = new Object();
         let pt1 = new Object();
         let pt2 = new Object();
@@ -87,17 +118,30 @@ class Renderer {
         pt2.y = 500;
         pt3.x = 600;
         pt3.y = 200;
-        let col = [255,0,0,255];
+        let col = [255,20,147,255];
+        this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
+        //fun bezier!
+        let pts = [pt0,pt1,pt2,pt3];
+        for(let i = 0; i < pts.length; i++)
+        {
+            pts[i].x = Math.floor(Math.random()*(this.canvas.width-i)) + i;
+            pts[i].y = Math.floor(Math.random()*(this.canvas.height - 49 - i)) + i + 49;
+        }
+        let red = Math.floor(Math.random()*256);
+        let green = Math.floor(Math.random()*256);
+        let blue = Math.floor(Math.random()*256);
+        col = [red,green,blue,255];
         this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
     }
 
     // ctx:          canvas context
     drawSlide3(ctx) 
     {
-        let col = [255,0,0,255];
-        let pt0 = {x: 100, y: 375};
+        //S
+        let col = [243,58,106,255];
+        let pt0 = {x: 125, y: 350};
         let pt1 = {x: 0, y: 400};
-        let pt2 = {x: 0, y: 300};
+        let pt2 = {x: 0, y: 290};
         let pt3 = {x: 50, y: 300};
         this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
         pt0 = {x: 50, y: 300};
@@ -105,12 +149,16 @@ class Renderer {
         pt2 = {x: 175, y: 175};
         pt3 = {x: 25, y: 225};
         this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
+        //a
+        col = [255,20,147,255];
         pt0 = {x: 210, y: 265};
         let rad = 40;
         this.drawCircle(pt0, rad, col, ctx);
         pt0 = {x: 250, y: 225};
         pt1 = {x: 252, y: 305};
         this.drawRectangle(pt0,pt1,col,ctx);
+        //r
+        col = [255,0,255,255];
         pt0 = {x: 272, y: 225};
         pt1 = {x: 274, y: 305};
         this.drawRectangle(pt0,pt1,col,ctx);
@@ -119,12 +167,16 @@ class Renderer {
         pt2 = {x: 340, y: 325};
         pt3 = {x: 340, y: 275};
         this.drawBezierCurve(pt0,pt1,pt2,pt3,col,ctx);
+        //a
+        col = [255,105,180,255];
         pt0 = {x: 400, y: 265};
         rad = 40;
         this.drawCircle(pt0, rad, col, ctx);
         pt0 = {x: 440, y: 225};
         pt1 = {x: 442, y: 305};
         this.drawRectangle(pt0,pt1,col,ctx);
+        //h
+        col = [255,182,193,255];
         pt0 = {x: 465, y: 225};
         pt1 = {x: 467, y: 400};
         this.drawRectangle(pt0,pt1,col,ctx);
